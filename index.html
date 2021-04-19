@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="listaTelefonica">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Telefônica</title>
+    <script src="lib/angular/angular.js"></script>
+    <script>
+        angular.module("listaTelefonica", []);
+        angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope) {
+            $scope.app = "Lista Telefônica";
+            $scope.contatos = [
+                {nome: "Pedro", telefone: 99998888}, 
+                {nome: "João", telefone: 99997777},
+                {nome: "Maria", telefone: 99995555}
+            ];
+            $scope.adicionarContato = function (contato) {
+                $scope.contatos.push(angular.copy(contato));
+                delete $scope.contato
+            };
+        });
+    </script>
+</head>
+<body ng-controller="listaTelefonicaCtrl">
+    <div>
+        <!-- 
+            <h4 ng-bind="app"></h4> 
+        -->
+        <h3>{{app}}</h3> <!-- mesma coisa que ng-bind -->
+        <table>
+            <tr>
+                <th>Nome</th>
+                <th>telefone</th>
+            </tr>
+            <tr ng-repeat="contato in contatos">
+                <td>{{contato.nome}}</td>
+                <td>{{contato.telefone}}</td>
+            </tr>
+        </table>
+        <hr/>
+        <input type="text" ng-model="contato.nome" placeholder="Nome" style="margin-bottom: 5px;"> <br>
+        <input type="text" ng-model="contato.telefone" placeholder="Telefone" style="margin-bottom: 5px;"> <br>
+        <button ng-click="adicionarContato(contato)">Adicionar Contato</button>
+    </div>  
+</body>
+</html>
