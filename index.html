@@ -5,25 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Telefônica</title>
+    <style>
+        .selecionado {
+            background-color: yellow;
+        }
+        .negrito {
+            font-weight: bold;
+        }
+    </style>
     <script src="lib/angular/angular.js"></script>
     <script>
         angular.module("listaTelefonica", []);
         angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope) {
             $scope.app = "Lista Telefônica";
             $scope.contatos = [
-                {nome: "Pedro", telefone: 99998888}, 
-                {nome: "João", telefone: 99997777},
-                {nome: "Maria", telefone: 99995555}
+                {nome: "Pedro", telefone: 99998888, cor: "blue"}, 
+                {nome: "João", telefone: 99997777, cor: "yellow"},
+                {nome: "Maria", telefone: 99995555, cor: "red"}
             ];
             $scope.adicionarContato = function (contato) {
                 $scope.contatos.push(angular.copy(contato));
                 delete $scope.contato
+                $scope.contatoForm.$setPristine();
+            };
+            $scope.apagarContatos = function (contatos) {
+                $scope.contatos = contatos.filter (function(contato) {
+                    if (!contato.selecionado) return contato;
+                });
+            };
+            $scope.isContatoSelecionado = function(contatos) {
+                 return contatos.some(function (contato) {
+                    return contato.selecionado;
+                });
             };
             $scope.operadoras = [
-                {nome: "Oi", codigo: "14"},
-                {nome: "Vivo", codigo: "15"},
-                {nome: "Tim", codigo: "41"},
+                {nome: "Oi", codigo: "14", categoria: "Celular"},
+                {nome: "Vivo", codigo: "15", categoria: "Celular"},
+                {nome: "Tim", codigo: "41", categoria: "Celular"},
+                {nome: "GVT", codigo: "25", categoria: "Fixo"},
+                {nome: "Embratel", codigo: "21", categoria: "Fixo"},
             ];
+            $scope.classe1 = "selecionado";
+            $scope.classe2 = "negrito";
         });
     </script>
 </head>
@@ -33,25 +56,38 @@
             <h4 ng-bind="app"></h4> 
         -->
         <h3>{{app}}</h3> <!-- mesma coisa que ng-bind -->
-        <table>
+        <table ng-show="contatos.length > 0">
             <tr>
+                <th></th>
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Operadora</th>
+                <th></th>
             </tr>
-            <tr ng-repeat="contato in contatos">
+            <tr  ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+                <td><input type="checkbox" ng-model="contato.selecionado"/></td>
                 <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.operadora.nome}}</td>
+                <td><div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}"></div></td>
             </tr>
         </table>
         <hr/>
-        <input type="text" ng-model="contato.nome" placeholder="Nome" style="margin-bottom: 5px;"> <br>
-        <input type="text" ng-model="contato.telefone" placeholder="Telefone" style="margin-bottom: 5px;"> <br>
-        <select ng-model="contato.operadora" ng-options="operadora.nome for operadora in operadoras">
-            <option value="">Selecione uma operadora</option>
-        </select>      
-        <button ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar Contato</button>
-    </div>  
+        <form name="contatoForm">
+            <input type="text" ng-model="contato.nome" name="nome" ng-required="true" ng-minlength="10" placeholder="Nome" style="margin-bottom: 5px;"> <br>
+            <input type="text" ng-model="contato.telefone" name="telefone" ng-minlength="9" ng-required="true" placeholder="Telefone" style="margin-bottom: 5px;"> <br>
+            <select ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+                <option value="">Selecione uma operadora</option>
+            </select> 
+        </form>
+        <div ng-show="contatoForm.nome.$error.required && contatoForm.nome.$dirty">Por favor, preencha o campo Nome!</div>
+        <div ng-show="contatoForm.nome.$error.minlength">O campo Nome deve possuir no mínimo 10 caracteres!</div> <br>
+        <div ng-show="contatoForm.telefone.$error.required && contatoForm.telefone.$dirty">Por favor, preencha o campo Telefone!</div>
+        <div ng-show="contatoForm.telefone.$error.minlength">O campo Telefone deve possuir no mínimo 9 caracteres!</div>
+        <br>   
+        <button style="margin-top: 5px;" ng-click="adicionarContato(contato)" ng-disabled="contatoForm.$invalid">Adicionar Contato</button>
+        <button style="margin-top: 5px;" ng-click="apagarContatos(contatos)" ng-if="(isContatoSelecionado(contatos))">Apagar Contato</button>
+    </div> 
+    <!-- <div ng-include="'footer.html'"></div> -->
 </body>
 </html>
