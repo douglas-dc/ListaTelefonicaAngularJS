@@ -7,6 +7,7 @@
     <title>Lista Telefônica</title>
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/app.css"> 
+    <link rel="stylesheet" type="text/css" href="css/ui.css"> 
     <script src="lib/angular/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.8.2/angular-messages.js" integrity="sha512-aXyeDnLJDDD7GvGKrFnS0gNjLUZmmtwp2/iU03TU9oDkv5XuHOaCkQcaS6T0pLLAZXnhKVapCM8eUkZ++ymmyg==" crossorigin="anonymous"></script>
     <script src="lib/angular/angular-locale_pt-br.js"></script>
@@ -19,6 +20,7 @@
     <script src="js/config/serialGeneratorConfig.js"></script>
     <script src="js/filters/nameFilter.js"></script>
     <script src="js/filters/ellipsisFilter.js"></script>
+    <script src="js/directives/uiAlertDirective.js"></script>
 </head>
 <body ng-controller="listaTelefonicaCtrl">
         <!-- 
@@ -26,7 +28,7 @@
         -->
     <div class="jumbotron">
         <h3>{{app}}</h3> <!-- mesma coisa que ng-bind -->
-        {{message}}
+        <div ui-alert></div>
         <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?">
         <table ng-show="contatos.length  > 0" class="table table-striped">
             <tr>
