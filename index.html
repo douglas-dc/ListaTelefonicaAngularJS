@@ -28,7 +28,7 @@
         -->
     <div class="jumbotron">
         <h3>{{app}}</h3> <!-- mesma coisa que ng-bind -->
-        <div ui-alert></div>
+        <ui-alert title="Ops, aconteceu um problema!"></ui-alert>
         <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?">
         <table ng-show="contatos.length  > 0" class="table table-striped">
             <tr>
