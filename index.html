@@ -22,6 +22,7 @@
     <script src="js/filters/ellipsisFilter.js"></script>
     <script src="js/directives/uiAlertDirective.js"></script>
     <script src="js/directives/uiDateDirective.js"></script>
+    <script src="js/directives/uiAccordion.js"></script>
 </head>
 <body ng-controller="listaTelefonicaCtrl">
         <!-- 
@@ -29,6 +30,18 @@
         -->
     <div class="jumbotron">
         <h3>{{app}}</h3> <!-- mesma coisa que ng-bind -->
+
+        <ui-accordions>
+            <ui-accordion title="Accordion 1">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem esse consequuntur quis quae dolores hic, earum repellat explicabo sapiente odit nostrum doloremque ducimus magni incidunt neque iusto aspernatur provident. Totam.
+            </ui-accordion>
+    
+            <ui-accordion title="Accordion 2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat voluptas perspiciatis, commodi impedit illo dicta! Quidem veritatis ea cum esse nesciunt maiores placeat. Voluptas amet debitis ipsam, at molestias corrupti!
+            </ui-accordion>
+        </ui-accordions>
+        
+        <hr>
         <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?">
         <table ng-show="contatos.length  > 0" class="table table-striped">
             <tr>
