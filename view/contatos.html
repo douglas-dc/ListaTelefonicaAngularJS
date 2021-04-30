@@ -1,4 +1,4 @@
-<div class="jumbotron" ng-controller="listaTelefonicaCtrl">
+<div class="jumbotron">
     <h3>{{app}}</h3> <!-- mesma coisa que ng-bind -->
 
     <ui-accordions>
@@ -28,37 +28,10 @@
             <td>{{contato.nome | name | ellipsis: 15}}</td>
             <td>{{contato.telefone}}</td>
             <td>{{contato.operadora.nome | lowercase}}</td>
-            <td>{{contato.data | date:'MMMM EEEE dd/MM/yyyy hh:mm'}}</td>
+            <td>{{contato.data | date:'dd/MM/yyyy'}}</td>
         </tr>
     </table>
     <hr/>
-    <form name="contatoForm">
-        <input class="form-control" type="text" ng-model="contato.nome" name="nome" ng-required="true" ng-minlength="10" placeholder="Nome">
-        <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" ng-minlength="9" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/" placeholder="Telefone">
-        <input class="form-control" type="text" ng-model="contato.data" name="data" placeholder="Data" ui-date/>
-        <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome + ' ('+ (operadora.preco | currency) +')' group by operadora.categoria for operadora in operadoras">
-            <option value="">Selecione uma operadora</option>
-        </select> 
-    </form>
-
-    <div ng-show="contatoForm.nome.$dirty" ng-messages="contatoForm.nome.$error">
-        <div ng-message="required" class="alert alert-danger">
-            Por favor, preencha o campo Nome!
-        </div>
-        <div ng-message="minlength" class="alert alert-danger">
-            O campo Nome deve possuir no mínimo 10 caracteres!
-        </div>
-    </div>
-    
-    <div ng-show="contatoForm.telefone.$error.required && contatoFm.telefone.$dirty" class="alert alert-danger">
-        Por favor, preencha o campo Telefone!
-    </div>
-    <div ng-show="contatoForm.telefone.$error.pattern" class="alert alert-danger">
-        O campo telefone deve possuir o formato DDDDD-DDDD
-    </div>
-    <div ng-show="contatoForm.telefone.$error.minlength" class="alert alert-danger">
-        O campo Telefone deve possuir no mínimo 9 caracteres!
-    </div> 
-    <button class="btn btn-primary btn-block"  style="margin-top: 5px;" ng-click="adicionarContato(contato)" ng-disabled="contatoForm.$invalid">Adicionar Contato</button>
+    <a class="btn btn-primary btn-block" href="#/novoContato">Novo Contato</a>
     <button class="btn btn-primary btn-block"  style="margin-top: 5px;" ng-click="apagarContatos(contatos)" ng-if="(isContatoSelecionado(contatos))">Apagar Contato</button>
 </div>
