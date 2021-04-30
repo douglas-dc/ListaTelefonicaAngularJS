@@ -2,7 +2,6 @@ angular.module("listaTelefonica").controller("novoContatoCtrl", function ($scope
     $scope.app = "Lista Telefônica";
     $scope.operadoras = operadoras.data
 
-
     $scope.adicionarContato = function (contato) {
         contato.serial = serialGenerator.generate();
         contatosAPI.saveContato(contato).then(function (response) {
