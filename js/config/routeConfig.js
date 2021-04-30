@@ -2,11 +2,21 @@ angular.module("listaTelefonica").config(function ($routeProvider, $locationProv
     $locationProvider.hashPrefix('');
     $routeProvider.when("/contatos", {
         templateUrl: "view/contatos.html",
-        controller: "listaTelefonicaCtrl"
+        controller: "listaTelefonicaCtrl",
+        resolve: {
+            operadoras: function(operadorasAPI) {
+                return operadorasAPI.getOperadoras();
+            }
+        }
     });
     $routeProvider.when("/novoContato", {
         templateUrl: "view/novoContato.html",
-        controller: "novoContatoCtrl"
+        controller: "novoContatoCtrl",
+        resolve: {
+            operadoras: function(operadorasAPI) {
+                return operadorasAPI.getOperadoras();
+            }
+        }
     });
     $routeProvider.otherwise({redirectTo: "/contatos"});
 });
