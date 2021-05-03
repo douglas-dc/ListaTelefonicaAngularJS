@@ -4,6 +4,9 @@ angular.module("listaTelefonica").config(function ($routeProvider, $locationProv
         templateUrl: "view/contatos.html",
         controller: "listaTelefonicaCtrl",
         resolve: {
+            contatos: function(contatosAPI) {
+                return contatosAPI.getContatos();
+            },
             operadoras: function(operadorasAPI) {
                 return operadorasAPI.getOperadoras();
             }
