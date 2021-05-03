@@ -13,13 +13,22 @@ angular.module("listaTelefonica").config(function ($routeProvider, $locationProv
         }
     });
     $routeProvider.when("/novoContato", {
-        templateUrl: "view/novoContato.html",
-        controller: "novoContatoCtrl",
+		templateUrl: "view/novoContato.html",
+		controller: "novoContatoCtrl",
+		resolve: {
+			operadoras: function (operadorasAPI) {
+				return operadorasAPI.getOperadoras();
+			}
+		}
+	});
+    $routeProvider.when("/detalhesContato/:id", {
+        templateUrl: "view/detalhesContato.html",
+        controller: "detalhesContatoCtrl",
         resolve: {
-            operadoras: function(operadorasAPI) {
-                return operadorasAPI.getOperadoras();
+            contato: function(contatosAPI, $route) {
+                return contatosAPI.getContato($route.current.params.id);
             }
-        }
+        } 
     });
     $routeProvider.otherwise({redirectTo: "/contatos"});
 });
