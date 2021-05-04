@@ -26,3 +26,8 @@ h3 {
 hr {
 	border-color: #999;
 }
+.loading-color {
+	color: cornflowerblue;
+	text-align: center;
+	font-weight: bold;
+}
